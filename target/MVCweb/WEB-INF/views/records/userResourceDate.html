@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelyf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form method="POST" action="/bd/add">
+    <label for="name">Enter name: </label>
+    <input name="name" type="text" id="name"/>
+    <br/>
+    <label for="surname">Enter surname: </label>
+    <input name="surname" type="text" id="surname">
+    <br/>
+    <label for="phone">Enter phone (sequence of numbers): </label>
+    <input name="phone" type="text" id="phone">
+    <br/>
+    <label for="date">Enter date in format YYYY-MM-DD: </label>
+    <input name="date" type="text" id="date"/>
+    <br/>
+    <label for="res">Enter number of resource: </label>
+    <input name="res" type="text" id="res"/>
+    <br/>
+    <input type="submit" value="OK">
+</form>
+
+
+
+<div th:each="res : ${resources}">
+    <p th:text="${resStat.index + 1} + '. ' + ${res.getName()}"></p>
+ <pre th:text= "     ${res.getDescription()}"> </pre>
+</div>
+
+<br>
+
+
+<br clear="all" th:text="${message}"/>
+
+<br>
+
+<form method="REDIRECT" action="/bd/">
+
+    <br/>
+    <input type="submit" value="CONTINUE WITHOUT CHOICE">
+</form>
+
+</body>
+</html>

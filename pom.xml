@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.example</groupId>
+  <artifactId>MVCweb</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>MVCwebMavenWebapp</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.2.7.RELEASE</version>
+    <relativePath/>
+  </parent>
+
+
+<!--  <properties>-->
+<!--    <maven.compiler.source>11</maven.compiler.source>-->
+<!--    <maven.compiler.target>11</maven.compiler.target>-->
+<!--    <spring-jdbc.version>5.2.6.RELEASE</spring-jdbc.version>-->
+<!--  </properties>-->
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+<!--      <version>5.3.12</version>-->
+  </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+<!--      <version>5.3.12</version>-->
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+<!--      <version>5.3.12</version>-->
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+<!--      <version>5.3.12</version>-->
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+      <!--        <version>2.2.4.RELEASE</version>-->
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <!--        <version>2.2.4.RELEASE</version>-->
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.junit.vintage</groupId>
+          <artifactId>junit-vintage-engine</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <!--        <version>5.2.6.RELEASE</version>-->
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <!--        <version>5.3.10</version>-->
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+<!--      <version>4.11</version>-->
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+<!--      <version>2.5.6</version>-->
+    </dependency>
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf</artifactId>
+<!--      <version>3.0.11.RELEASE</version>-->
+    </dependency>
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf-spring5</artifactId>
+<!--      <version>3.0.11.RELEASE</version>-->
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>javax.servlet.jsp-api</artifactId>
+      <version>2.3.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jstl</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+<!--      <version>1.18.22</version>-->
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <!--        <version>5.4.15.Final</version>-->
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+<!--      <version>1.4.200</version>-->
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+<!--      <version>1.4.200</version>-->
+      <scope>runtime</scope>
+    </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-test</artifactId>
+      </dependency>
+      <!--    <dependency>-->
+<!--      <groupId>org.projectlombok</groupId>-->
+<!--      <artifactId>maven-lombok-plugin</artifactId>-->
+<!--      <version>0.9.3.1</version>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>javax</groupId>-->
+<!--      <artifactId>javaee-web-api</artifactId>-->
+<!--      <version>6.0</version>-->
+<!--      <scope>provided</scope>-->
+<!--    </dependency>-->
+  </dependencies>
+
+  <build>
+    <finalName>MVCweb</finalName>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>2.6.1</version>
+        </plugin>
+        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+<!--          <version>3.2.0</version>-->
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+<!--          <version>3.8.0</version>-->
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+<!--          <version>3.0.0-M1</version>-->
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+<!--          <version>3.3.1</version>-->
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+<!--          <version>3.0.0-M1</version>-->
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+<!--          <version>3.0.0-M1</version>-->
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+<!--      <version>3.8.0</version>-->
+      <configuration>
+        <release>11</release>
+      </configuration>
+    </plugin>
+  </plugins>
+
+  </build>
+</project>

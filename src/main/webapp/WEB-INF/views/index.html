@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelyf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form method="REDIRECT" action="/bd/userResourceDate">
+    <input type="submit" value="Create new record">
+</form>
+<form method="REDIRECT" action="/bd/userdata">
+      <input type="submit" value="Find all my records">
+</form>
+<!--<div th::each = "resource : ${resources}">-->
+<!--    <a th::text = "${resource.getName()}">resource</a>-->
+<!--</div>-->
+<body>
+<br clear="all" th:text="${resources}"/>
+</body>
+
+</body>
+</html>

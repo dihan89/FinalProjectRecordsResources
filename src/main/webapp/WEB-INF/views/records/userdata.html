@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelyf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form method="POST" action="/bd/find">
+    <label for="name">Enter name: </label>
+    <input name="name" type="text" id="name"/>
+    <br/>
+    <label for="surname">Enter surname: </label>
+    <input name="surname" type="text" id="surname">
+    <br/>
+    <label for="phone">Enter phone (sequence of numbers): </label>
+    <input name="phone" type="text" id="phone">
+    <br/>
+    <input type="submit" value="OK">
+</form>
+
+
+<body>
+<br clear="all" th:text="${resources}"/>
+</body>
+
+<br>
+
+<br clear="all" th:text="${message}"/>
+</body>
+</html>

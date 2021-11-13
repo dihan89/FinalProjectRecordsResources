@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
+<html lang="en" xmlns:th="http://www.thymelyf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Records </title>
+</head>
+<body>
+<br> All your records: </br>
+
+
+<div th:each="rec : ${recordList2}">
+    <p th:text="${recStat.index + 1} + '. ' +
+     ${rec.getResource().getName()} + '   ' +
+     ${rec.getDate().toString()} + '   ' +
+     ${rec.getTimeStart().toString()}"></p>
+</div>
+
+
+<form method="POST" action="/bd/delete">
+    <label for="recordString"> Delete record with number: </label>
+    <input name="recordString" type="text" id="recordString"/>
+    <br/>
+    <input type="submit" value="OK">
+</form>
+
+<br>
+
+
+<br clear="all" th:text="${message}"/>
+
+<br>
+
+<form method="REDIRECT" action="/bd/">
+    <br/>
+    <input type="submit" value="CONTINUE WITHOUT DELETING">
+</form>
+</body>
+</html>

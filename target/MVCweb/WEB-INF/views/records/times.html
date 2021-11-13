@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
+<html lang="en" xmlns:th="http://www.thymelyf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title </title>
+</head>
+<body>
+<br> Possible variants of time: </br>
+
+
+<div th:each="rec : ${recordList}">
+    <p th:text="${recStat.index + 1} + '. ' + ${rec.getTimeStart().toString()}"></p>
+    <!--    <p th:text = "${rec.getTimeStart().toString()}"></p>-->
+</div>
+
+
+<form method="POST" action="/bd/setTime">
+    <label for="timeString">Enter number of time for start: </label>
+    <input name="timeString" type="text" id="timeString"/>
+    <br/>
+    <input type="submit" value="OK">
+</form>
+
+<br>
+
+
+<br clear="all" th:text="${message}"/>
+
+<br>
+
+<form method="REDIRECT" action="/bd/">
+    <br/>
+    <input type="submit" value="CONTINUE WITHOUT CHOICE">
+</form>
+
+
+</body>
+</html>
