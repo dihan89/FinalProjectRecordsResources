@@ -17,7 +17,6 @@ import java.util.List;
 @Service
 @EntityScan("recordToResource.model")
 @Transactional
-@Repository("resourceDao")
 public class ResourceDaoImpl implements ResourceDao {
     @Autowired
     private EntityManager entityManager;
@@ -29,11 +28,11 @@ public class ResourceDaoImpl implements ResourceDao {
             return false;
         }
         resource.setName(resource.getName().trim());
-        if(resource.getName() == "" || findByName(resource.getName()) != null)
+        if (resource.getName().equals("") || findByName(resource.getName()) != null)
             return false;
         try {
             entityManager.persist(resource);
-        } catch(Throwable exc){
+        } catch (Throwable exc) {
             return false;
         }
         return true;
@@ -46,11 +45,6 @@ public class ResourceDaoImpl implements ResourceDao {
         if (entityManager.find(Resource.class, resource.getId()) != null) {
             entityManager.remove(entityManager.find(Resource.class, resource.getId()));
         }
-//        try {
-//            entityManager.remove(entityManager.find(Resource.class, resource.getId()));
-//        } catch (InvalidDataAccessApiUsageException e) {
-//            e.printStackTrace();
-//        }
     }
 
     @Override
@@ -70,5 +64,4 @@ public class ResourceDaoImpl implements ResourceDao {
                 .createNamedQuery("findAllResources")
                 .getResultList();
     }
-
 }

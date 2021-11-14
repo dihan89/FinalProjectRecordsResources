@@ -93,5 +93,4 @@ public class Configuration implements WebMvcConfigurer {
             constructed = true;
         }
     }
-    // https://www.pvsm.ru/java/304158vv
 }

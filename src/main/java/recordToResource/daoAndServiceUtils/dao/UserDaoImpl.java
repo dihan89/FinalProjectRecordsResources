@@ -14,13 +14,11 @@ import java.util.List;
 @Service
 @EntityScan("recordToResource.model")
 @Transactional
-@Repository("userDao")
-
 public class UserDaoImpl implements UserDao {
     @Autowired
     private EntityManager entityManager;
 
-    private ValidatorTransformer validatorTransformer = new ValidatorTransformer();
+    private final ValidatorTransformer validatorTransformer = new ValidatorTransformer();
 
     @Override
     @Transactional

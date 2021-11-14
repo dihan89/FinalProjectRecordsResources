@@ -59,7 +59,7 @@ public class UserControllerBD {
         return "records/userResourceDate";
     }
 
-    @GetMapping("/finPage")
+    @GetMapping("/finpage")
     public String finPage() {
         return "records/finpage";
     }
@@ -89,9 +89,9 @@ public class UserControllerBD {
         return "records/allYourRecords";
     }
 
-    @GetMapping("/NotFoundEmptyRecords")
+    @GetMapping("/notFoundEmptyRecords")
     private String notFoundEmptyRecords() {
-        return "records/NotFoundEmptyRecords";
+        return "records/notFoundEmptyRecords";
     }
 
     @PostMapping("/delete")
@@ -111,11 +111,11 @@ public class UserControllerBD {
     }
 
     @PostMapping("/add")
-    private String addRecord(Model model, @RequestParam(value = "name", required = true) String name,
-                       @RequestParam(value = "surname", required = true) String surname,
-                       @RequestParam(value = "phone", required = true) String phone,
-                       @RequestParam(value = "res") String resNumber,
-                       @RequestParam(value = "date") String dateString) {
+    private String addRecord(Model model, @RequestParam(value = "name") String name,
+                             @RequestParam(value = "surname") String surname,
+                             @RequestParam(value = "phone") String phone,
+                             @RequestParam(value = "res") String resNumber,
+                             @RequestParam(value = "date") String dateString) {
         Date date;
         try {
             date = Date.valueOf(dateString);
@@ -123,17 +123,17 @@ public class UserControllerBD {
                 throw new DateBeforeNowException(dateString);
             }
         } catch (Exception exc) {
-            message = "Date is not correct! ";
+            message = "The date is not correct! ";
             return "redirect:userResourceDate";
         }
 
-        Integer resNumb = 0;
+        int resourceNo = 0;
         try {
-            resNumb = Integer.parseInt(resNumber);
-            if (resNumb < 1 || resNumb > resourceList.size())
-                throw new IllegalArgumentException(String.format("%s%d", "index of resource: ", resNumb));
+            resourceNo = Integer.parseInt(resNumber);
+            if (resourceNo < 1 || resourceNo > resourceList.size())
+                throw new IllegalArgumentException(String.format("%s%d", "index of resource: ", resourceNo));
         } catch (Exception exc) {
-            message = "Number of resource is not correct!";
+            message = "Resource's number is not correct!";
             return "redirect:userResourceDate";
         }
 
@@ -142,19 +142,20 @@ public class UserControllerBD {
             message = "User data is not correct! ";
             return "redirect:userResourceDate";
         }
-         if (yourUser.getId() == null){
-            message = "Error in the database. Maybe, there is exists another user with the same phone number! ";
+        if (yourUser.getId() == null) {
+            message = "Oh! Maybe, there is exists another user " +
+                    "with the same phone number!";
             return "redirect:userResourceDate";
         }
 
         record.setUser(yourUser);
         record.setDate(date);
-        record.setResource(resourceList.get(resNumb - 1));
+        record.setResource(resourceList.get(resourceNo - 1));
         recordList =
                 recordDao.findEmptyRecordsByResourceAndDate(record.getResource(), date);
         message = "";
         if (recordList == null || recordList.isEmpty()) {
-            return "redirect:NotFoundEmptyRecords";
+            return "redirect:notFoundEmptyRecords";
         }
         return "redirect:times";
     }
@@ -166,7 +167,7 @@ public class UserControllerBD {
                         @RequestParam(value = "phone") String phone) {
         yourUser = userDao.find(name, surname, phone);
         if (yourUser == null) {
-            message = "User data is not correct or user not exists!";
+            message = "User data is not correct or user does not exist!";
             return "redirect:userdata";
         }
         message = "";
@@ -178,25 +179,25 @@ public class UserControllerBD {
 
     @PostMapping("/setTime")
     private String setTime(@RequestParam(value = "timeString") String nTime) {
-        int n = 0;
+        int timeIntervalNo = 0;
         try {
-            n = Integer.parseInt(nTime);
-            if (n < 1 || n > recordList.size())
-                throw new IllegalArgumentException("Number of empty time must be in correct diapason");
-            n -= 1;
+            timeIntervalNo = Integer.parseInt(nTime);
+            if (timeIntervalNo < 1 || timeIntervalNo > recordList.size())
+                throw new IllegalArgumentException("Number of empty time " +
+                        "must be in the correct diapason");
+            timeIntervalNo--;
         } catch (Exception exc) {
             message = "Please enter the number of time!";
             return "redirect:times";
         }
-        if (recordList.get(n).getUser() != null) {
+        if (recordList.get(timeIntervalNo).getUser() != null) {
             message = "Sorry, this time is busy!";
             return "redirect:times";
         }
-        record.setTimeStart(recordList.get(n).getTimeStart());
-        //recordDao.addUserToRecord(recordList, n, yourUser);
-        recordDao.addUser(yourUser, recordList.get(n));
+        record.setTimeStart(recordList.get(timeIntervalNo).getTimeStart());
+        recordDao.addUser(yourUser, recordList.get(timeIntervalNo));
         message = "";
-        return "redirect:finPage";
+        return "redirect:finpage";
     }
 
     public String getAllResources() {

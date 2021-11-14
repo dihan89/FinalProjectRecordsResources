@@ -37,7 +37,7 @@ public class UserDaoTest {
     @BeforeEach
     @AfterEach
     @Transactional
-    public void clear(){
+    public void clear() {
         JdbcTestUtils.deleteFromTables(
                 new JdbcTemplate(dataSource),
                 "Record", "User", "Resource");
@@ -107,14 +107,13 @@ public class UserDaoTest {
         Assertions.assertEquals(user, user1);
         Assertions.assertNull(userDao.find("Ivan", "Ivanov", "8960000000"));
     }
+
     @Test
-    void checkUniquePhones(){
+    void checkUniquePhones() {
         User user1 = new User("Ivan", "Ivanov", "89601234567");
         Assertions.assertTrue(userDao.add(user1));
         User user2 = new User("Ivan", "Ivanov", "89601234567");
         Assertions.assertFalse(userDao.add(user2));
-
-
     }
 }
 

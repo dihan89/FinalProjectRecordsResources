@@ -15,13 +15,9 @@ public interface RecordDao {
 
     boolean addUser(User user, Record record);
 
-    //boolean addUserToRecord(List<Record> records, int index, User user);
-
     boolean delete(User user, Resource resource, Date date, Time time);
 
     boolean delete(Record record);
-
-    //boolean delete(User user, Resource resource, Date date, Time time, Record record);
 
     boolean deleteUserFromRecord(Record record);
 

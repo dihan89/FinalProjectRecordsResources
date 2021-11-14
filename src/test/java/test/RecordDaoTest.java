@@ -117,7 +117,7 @@ public class RecordDaoTest {
         recordDao.add(null, resource, date, time, duration);
         List<Record> list =
                 recordDao.findEmptyRecordsByResourceAndDate(resource, date);
-        Integer nEmptyRecords = list.size();
+        int nEmptyRecords = list.size();
         Record record = list.get(0);
         Assertions.assertNotNull(list);
         recordDao.addUser(user, record);
@@ -139,7 +139,7 @@ public class RecordDaoTest {
                 recordDao.findEmptyRecordsByResourceAndDate(resource, date);
 
         Assertions.assertEquals(list.size(), 1);
-        Assertions.assertEquals(list.get(0).getUser(), null);
+        Assertions.assertNull(list.get(0).getUser());
     }
 
     @Test
@@ -195,7 +195,7 @@ public class RecordDaoTest {
         isOk = recordDao.add(null, null, null, null, duration);
         Assertions.assertFalse(isOk);
         isOk = recordDao.add(null, null, null, null, null);
-
+        Assertions.assertFalse(isOk);
         Record record =
                 recordDao.findEmptyRecordsByResourceAndDate(
                         resource, date).get(0);
@@ -206,7 +206,7 @@ public class RecordDaoTest {
 
     @Test
     void deleteByRecord() {
-        boolean isOk = recordDao.add(user, resource, date, time, duration);
+        recordDao.add(user, resource, date, time, duration);
         Record record = recordDao.findAllRecords().get(0);
         Assertions.assertTrue(recordDao.delete(record));
         Assertions.assertFalse(recordDao.delete(record));
@@ -218,37 +218,4 @@ public class RecordDaoTest {
         Assertions.assertTrue(recordDao.delete(user, resource, date, time));
         Assertions.assertFalse(recordDao.delete(user, resource, date, time));
     }
-
-//    @Test
-//    void addUserToRecord() {
-//        recordDao.add(user, resource, date, time, duration);
-//        recordDao.add(null, resource1, date, time1, duration);
-//        recordDao.add(null, resource, date, time2, duration);
-//        recordDao.add(null, resource1, date, time2, duration);
-//
-//        List<Record> list = recordDao.findAllRecords();
-//
-//        Assertions.assertEquals(
-//                recordDao.addUserToRecord(list, 0, user1), false);
-//        Assertions.assertEquals(
-//                recordDao.addUserToRecord(list, 1, user1), true);
-//        Assertions.assertEquals(
-//                recordDao.addUserToRecord(list, 2, user1), true);
-//        Assertions.assertEquals(
-//                recordDao.addUserToRecord(list, 3, user), true);
-//        Assertions.assertEquals(
-//                recordDao.findAllRecordsByUser(user1).size(),2
-//        );
-//        Assertions.assertEquals(
-//                recordDao.findAllRecordsByUser(user).size(),2
-//        );
-//        Assertions.assertEquals(
-//                recordDao.findEmptyRecordsByResourceAndDate(
-//                        resource,date).size(),0);
-//        Assertions.assertEquals(
-//                recordDao.findEmptyRecordsByResourceAndDate(
-//                        resource1,date).size(),0);
-//    }
-
-
 }

@@ -2,7 +2,6 @@ package recordToResource.daoAndServiceUtils.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import recordToResource.model.Record;
@@ -10,8 +9,6 @@ import recordToResource.model.Resource;
 import recordToResource.model.User;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.Duration;
@@ -23,7 +20,6 @@ import java.util.List;
 @Service
 @EntityScan("recordToResource.model")
 @Transactional
-@Repository("recordDao")
 public class RecordDaoImpl implements RecordDao {
 
     @Autowired
@@ -40,11 +36,11 @@ public class RecordDaoImpl implements RecordDao {
                 resourceDao.findByName(resource.getName()) == null) {
             return false;
         }
-        if (date == null || time == null || duration == null  ||
-            date.before(Date.valueOf(LocalDate.now())) ||
+        if (date == null || time == null || duration == null ||
+                date.before(Date.valueOf(LocalDate.now())) ||
                 (date.equals(Date.valueOf(LocalDate.now())) &&
                         time.before(Time.valueOf(LocalTime.now())))) {
-           return false;
+            return false;
         }
         Record record = new Record();
         record.setUser(user);
@@ -122,18 +118,6 @@ public class RecordDaoImpl implements RecordDao {
                 .getResultList();
     }
 
-//    @Override
-//    @Transactional
-//    public boolean addUserToRecord(List<Record> records, int index, User user) {
-//        if (index < 0 || index >= records.size()) {
-//            return false;
-//        }
-//        if (records.get(index).getUser() != null) {
-//            return false;
-//        }
-//        return addUser(user, records.get(index));
-//    }
-
     @Override
     @Transactional
     public void createNullRecords(Date date, Time timeStartGroup, Integer count,
@@ -142,7 +126,6 @@ public class RecordDaoImpl implements RecordDao {
         LocalDateTime ldt =
                 LocalDateTime.of(date.toLocalDate(), timeStartGroup.toLocalTime());
         for (int i = 0; i < count; ++i) {
-            // System.out.println("UUU" + i + " "+ldt.toLocalTime().toString());
             Time currentTime = Time.valueOf(ldt.toLocalTime());
             Date currentDate = Date.valueOf(ldt.toLocalDate());
             add(null, resource, currentDate, currentTime, duration);
@@ -161,14 +144,8 @@ public class RecordDaoImpl implements RecordDao {
     @Override
     @Transactional
     public boolean delete(Record record) {
-        System.out.println(record.toString());
-//        if (record != null) {
-//            entityManager.remove(entityManager.find(Record.class, record.getId()));
-//        }
-//        return true;
-
         if (record == null) {
-            return  false;
+            return false;
         }
         Record record1 = entityManager.find(Record.class, record.getId());
         if (record1 == null) {
@@ -189,7 +166,6 @@ public class RecordDaoImpl implements RecordDao {
         entityManager.merge(record);
         return true;
     }
-
 }
 
 

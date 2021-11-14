@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.jdbc.JdbcTestUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 import recordToResource.Runner;
 import recordToResource.daoAndServiceUtils.dao.RecordDao;
@@ -50,19 +51,21 @@ public class ElemetaryWorkWithDBTest {
     private RecordDao recordDao;
 
 
-
+    @BeforeEach
     @AfterEach
+    @Transactional
     public void clear() {
         JdbcTestUtils.deleteFromTables(
                 new JdbcTemplate(dataSource),
-                "Record", "User",  "Resource");
+                "Record", "User", "Resource");
     }
 
     private void doInTransaction(Consumer<EntityManager> consumer) {
         transactionTemplate.executeWithoutResult(transactionStatus -> consumer.accept(entityManager));
     }
+
     @Test
-    public void createUsers(){
+    public void createUsers() {
         User userA = new User();
         userA.setSurname("Ivanov");
         userA.setName("Ivan");
@@ -93,7 +96,7 @@ public class ElemetaryWorkWithDBTest {
         record2.setDate(Date.valueOf(LocalDate.now()));
         record2.setDuration(Duration.ofMinutes(30));
 
-        doInTransaction(em->{
+        doInTransaction(em -> {
             em.persist(userA);
             em.persist(userB);
             em.persist(resourceA);
@@ -105,11 +108,11 @@ public class ElemetaryWorkWithDBTest {
                             Time.valueOf("23:00:00"),
                             5,
                             Duration.ofMinutes(25),
-                            resourceB );
+                            resourceB);
         });
         List<Record> list = recordDao.findAllRecords();
-        Assertions.assertEquals(list.size(),7);
-        Assertions.assertEquals(userDao.findByPhone("234567"),userB);
+        Assertions.assertEquals(list.size(), 7);
+        Assertions.assertEquals(userDao.findByPhone("234567"), userB);
         Assertions.assertFalse(userA.getId() == 0);
         Assertions.assertNotNull(userA.getId());
         Assertions.assertFalse(resourceA.getId() == 0);
@@ -117,7 +120,7 @@ public class ElemetaryWorkWithDBTest {
 
 
         doInTransaction(em -> {
-           User user1 = em.find(User.class, userA.getId());
+            User user1 = em.find(User.class, userA.getId());
             User user2 = em.find(User.class, userB.getId());
             Assertions.assertEquals(user1, userA);
             Assertions.assertNotEquals(user2, userA);
@@ -125,16 +128,16 @@ public class ElemetaryWorkWithDBTest {
 
         doInTransaction(em -> {
             User user1 = userDao.findByPhone("123456");
-            System.out.println("Vot "+ user1);
-            Assertions.assertEquals(resourceDao.findAll().size(),2);
+            System.out.println("Vot " + user1);
+            Assertions.assertEquals(resourceDao.findAll().size(), 2);
 
         });
+
     }
-    @BeforeEach
-    public void startServer() throws SQLException {
+
+    @BeforeAll
+    public static void startServer() throws SQLException {
         Server.createTcpServer().start();
-        JdbcTestUtils.deleteFromTables(
-                new JdbcTemplate(dataSource),
-                "Record", "User",  "Resource");
+
     }
 }

@@ -11,8 +11,7 @@ import java.time.LocalDateTime;
 public class TimeTest {
 
     @Test
-    public void testTime(){
-
+    public void testTime() {
         Time time = Time.valueOf("19:53:00");
         Date date = Date.valueOf("2022-12-11");
         LocalDateTime ldt = LocalDateTime.of(date.toLocalDate(), time.toLocalTime());

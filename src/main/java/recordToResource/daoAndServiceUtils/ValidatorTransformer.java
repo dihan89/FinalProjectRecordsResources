@@ -43,13 +43,5 @@ public class ValidatorTransformer {
        }
        return  correctPhone.toString();
 
-        //-----------------------------------------------------
-//        if (!phone.matches("((8?)(\\d){3}(\\d){3}(\\d){2}(\\d{2})")) {
-//            return null;
-//        }
-//        return phone;
     }
-
-
-
 }

@@ -21,7 +21,7 @@ import java.util.Arrays;
 @Transactional
 @Repository("generatorFromFile")
 public class GeneratorFromFileImpl implements GeneratorFromFile {
-    private ValidatorTransformer validatorTransformer = new ValidatorTransformer();
+    private final ValidatorTransformer validatorTransformer = new ValidatorTransformer();
 
     @Autowired
     private ResourceDao resourceDao;
@@ -49,7 +49,7 @@ public class GeneratorFromFileImpl implements GeneratorFromFile {
                 Date date = validatorTransformer.getDateOrNull(elems[0]);
                 Time timeStart = validatorTransformer.getTimeOrNull(elems[1]);
                 Duration duration;
-                Integer count;
+                int count = 0;
                 if (date != null && timeStart != null) {
                     duration = Duration.ofMinutes(Long.parseLong(elems[2]));
                     count = Integer.parseInt(elems[3]);
@@ -66,7 +66,7 @@ public class GeneratorFromFileImpl implements GeneratorFromFile {
     @Override
     @Transactional
     public void generateResourceNullRecordsFromDir(File dir){
-        if (!dir.isDirectory())
+        if (dir != null && !dir.isDirectory())
             return;
         File[] files = dir.listFiles();
         Arrays.stream(files).parallel().forEach(f->{

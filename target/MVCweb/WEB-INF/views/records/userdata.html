@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymelyf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>DATA</title>
 </head>
 <body>
 
@@ -19,13 +19,14 @@
     <input type="submit" value="OK">
 </form>
 
-
-<body>
-<br clear="all" th:text="${resources}"/>
-</body>
-
 <br>
 
 <br clear="all" th:text="${message}"/>
+
+
+<form method="REDIRECT" action="/bd/">
+    <br/>
+    <input type="submit" value="CONTINUE WITHOUT A CHOICE">
+</form>
 </body>
 </html>

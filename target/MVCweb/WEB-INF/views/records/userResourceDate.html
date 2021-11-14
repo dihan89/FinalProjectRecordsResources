@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymelyf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>USERDATA</title>
 </head>
 <body>
 
@@ -26,10 +26,9 @@
 </form>
 
 
-
 <div th:each="res : ${resources}">
     <p th:text="${resStat.index + 1} + '. ' + ${res.getName()}"></p>
- <pre th:text= "     ${res.getDescription()}"> </pre>
+    <pre th:text="     ${res.getDescription()}"> </pre>
 </div>
 
 <br>
@@ -42,7 +41,7 @@
 <form method="REDIRECT" action="/bd/">
 
     <br/>
-    <input type="submit" value="CONTINUE WITHOUT CHOICE">
+    <input type="submit" value="CONTINUE WITHOUT A CHOICE">
 </form>
 
 </body>
