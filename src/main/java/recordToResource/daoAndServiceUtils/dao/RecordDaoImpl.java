@@ -35,10 +35,16 @@ public class RecordDaoImpl implements RecordDao {
 
     @Override
     @Transactional
-    public void add(User user, Resource resource, Date date, Time time, Duration duration) {
-
-        if (resourceDao.findByName(resource.getName()) == null) {
-            return;
+    public boolean add(User user, Resource resource, Date date, Time time, Duration duration) {
+        if (resource == null ||
+                resourceDao.findByName(resource.getName()) == null) {
+            return false;
+        }
+        if (date == null || time == null || duration == null  ||
+            date.before(Date.valueOf(LocalDate.now())) ||
+                (date.equals(Date.valueOf(LocalDate.now())) &&
+                        time.before(Time.valueOf(LocalTime.now())))) {
+           return false;
         }
         Record record = new Record();
         record.setUser(user);
@@ -47,7 +53,7 @@ public class RecordDaoImpl implements RecordDao {
         record.setTimeStart(time);
         record.setDuration(duration);
         entityManager.persist(record);
-
+        return true;
     }
 
     @Override
@@ -55,7 +61,7 @@ public class RecordDaoImpl implements RecordDao {
     public boolean delete(User user,
                           Resource resource, Date date, Time time) {
         Record record = findByResourceAndTime(resource, date, time);
-        if (record == null || record.getUser() != user) {
+        if (record == null || (!record.getUser().equals(user))) {
             return false;
         }
         entityManager.remove(record);
@@ -92,8 +98,10 @@ public class RecordDaoImpl implements RecordDao {
     @Override
     @Transactional
     public boolean addUser(User user, Record record) {
-        if (record.getUser() != null)
+
+        if (record == null || record.getUser() != null) {
             return false;
+        }
         record.setUser(user);
         entityManager.merge(record);
         return true;
@@ -114,14 +122,17 @@ public class RecordDaoImpl implements RecordDao {
                 .getResultList();
     }
 
-    @Override
-    @Transactional
-    public boolean addToRecord(List<Record> records, int index, User user) {
-        if (index < 0 || index >= records.size())
-            return false;
-        return addUser(user, records.get(index));
-
-    }
+//    @Override
+//    @Transactional
+//    public boolean addUserToRecord(List<Record> records, int index, User user) {
+//        if (index < 0 || index >= records.size()) {
+//            return false;
+//        }
+//        if (records.get(index).getUser() != null) {
+//            return false;
+//        }
+//        return addUser(user, records.get(index));
+//    }
 
     @Override
     @Transactional
@@ -140,7 +151,7 @@ public class RecordDaoImpl implements RecordDao {
     }
 
     @Override
-    public List<Record> findAllRecordsByUser(User user) {
+    public List<Record> findRecordsByUser(User user) {
         return entityManager
                 .createNamedQuery("findAllRecordsByUser")
                 .setParameter("user", user)
@@ -151,17 +162,28 @@ public class RecordDaoImpl implements RecordDao {
     @Transactional
     public boolean delete(Record record) {
         System.out.println(record.toString());
-        if (record != null) {
-            entityManager.remove(entityManager.find(Record.class, record.getId()));
+//        if (record != null) {
+//            entityManager.remove(entityManager.find(Record.class, record.getId()));
+//        }
+//        return true;
+
+        if (record == null) {
+            return  false;
         }
+        Record record1 = entityManager.find(Record.class, record.getId());
+        if (record1 == null) {
+            return false;
+        }
+        entityManager.remove(record1);
         return true;
     }
 
     @Override
     @Transactional
     public boolean deleteUserFromRecord(Record record) {
-        if (record.getDate().before(Date.valueOf(LocalDate.now())) &&
-                record.getTimeStart().before(Time.valueOf(LocalTime.now())))
+        if (record.getDate().before(Date.valueOf(LocalDate.now())) ||
+                (record.getDate().equals(Date.valueOf(LocalDate.now())) &&
+                        record.getTimeStart().before(Time.valueOf(LocalTime.now()))))
             return false;
         record.setUser(null);
         entityManager.merge(record);

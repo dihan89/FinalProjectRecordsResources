@@ -11,28 +11,29 @@ import java.util.List;
 
 
 public interface RecordDao {
-    void add(User user, Resource resource, Date date, Time time, Duration duration);
+    boolean add(User user, Resource resource, Date date, Time time, Duration duration);
 
     boolean addUser(User user, Record record);
 
-    boolean delete(User user,
-                   Resource resource, Date date, Time time);
+    //boolean addUserToRecord(List<Record> records, int index, User user);
+
+    boolean delete(User user, Resource resource, Date date, Time time);
+
+    boolean delete(Record record);
+
+    //boolean delete(User user, Resource resource, Date date, Time time, Record record);
+
+    boolean deleteUserFromRecord(Record record);
 
     List<Record> findRecordsByResource(Resource resource);
 
     List<Record> findAllRecords();
 
-    List<Record> findAllRecordsByUser(User user);
+    List<Record> findRecordsByUser(User user);
 
     List<Record> findEmptyRecordsByResourceAndDate(
             Resource resource, Date date);
 
-    boolean addToRecord(List<Record> records, int index, User user);
-
-    boolean delete(Record record);
-
     void createNullRecords(Date date, Time timeStartGroup, Integer count,
                            Duration duration, Resource resource);
-
-    boolean deleteUserFromRecord(Record record);
 }

@@ -91,6 +91,14 @@ public class ResourceDaoTest {
         Assertions.assertEquals(list.size(), 2);
         Assertions.assertTrue(list.contains(resource1));
         Assertions.assertTrue(list.contains(resource2));
+    }
 
+    @Test
+    void uniqueNameTest() {
+        Resource resource1 = new Resource("Library", "Lenin Library.");
+        Resource resource2 = new Resource("Library", "");
+
+        Assertions.assertTrue(resourceDao.add(resource1));
+        Assertions.assertFalse(resourceDao.add(resource2));
     }
 }

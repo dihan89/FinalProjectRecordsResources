@@ -170,7 +170,7 @@ public class UserControllerBD {
             return "redirect:userdata";
         }
         message = "";
-        allYourRecords = recordDao.findAllRecordsByUser(yourUser);
+        allYourRecords = recordDao.findRecordsByUser(yourUser);
         if (allYourRecords.isEmpty())
             return "redirect:messageNotRecords";
         return "redirect:allYourRecords";
@@ -193,7 +193,8 @@ public class UserControllerBD {
             return "redirect:times";
         }
         record.setTimeStart(recordList.get(n).getTimeStart());
-        recordDao.addToRecord(recordList, n, yourUser);
+        //recordDao.addUserToRecord(recordList, n, yourUser);
+        recordDao.addUser(yourUser, recordList.get(n));
         message = "";
         return "redirect:finPage";
     }
